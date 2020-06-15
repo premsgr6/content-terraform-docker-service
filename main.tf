@@ -5,18 +5,16 @@ resource "docker_service" "mysql-service" {
     container_spec {
       image = "${var.mysql_image}"
 
-      env {
+      env = {
         MYSQL_ROOT_PASSWORD = "${var.mysql_root_password}"
       }
 
-      mounts = [
-        {
+      mounts         {
           target = "/var/lib/mysql"
           source = "${docker_volume.mysql_data_volume.name}"
           type   = "volume"
         }
-      ]
-    }
+      }
     networks = ["${docker_network.private_bridge_network.name}"]
   }
 }
